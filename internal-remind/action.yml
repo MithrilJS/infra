@@ -1,0 +1,5 @@
+name: Generate internal reminder
+
+runs:
+  using: node20
+  main: ../lib/entry/handle-remind.js

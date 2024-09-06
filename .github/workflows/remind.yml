@@ -1,0 +1,16 @@
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  issues: write
+
+jobs:
+  remind:
+    runs-on:
+    - ubuntu-latest
+    - windows-latest
+    - macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./internal-remind
