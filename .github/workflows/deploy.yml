@@ -1,15 +1,13 @@
 on:
   repository_dispatch:
     types:
-    - deploy-npm
+    - deploy
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        repository: ${{ github.workflow_ref }}
-    - uses: ./internal-deploy-npm
+    - uses: MithrilJS/infra/internal/deploy
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
+        github_pages_token: ${{ secrets.GITHUB_PAGES_TOKEN }}

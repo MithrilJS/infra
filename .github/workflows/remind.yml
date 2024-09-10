@@ -12,5 +12,4 @@ jobs:
     - windows-latest
     - macos-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: ./internal-remind
+    - uses: MithrilJS/infra/internal/remind

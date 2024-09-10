@@ -1,0 +1,9 @@
+name: Do internal deployment
+
+inputs:
+  npm_token:
+    required: true
+
+runs:
+  using: node20
+  main: ../../lib/entry/handle-deploy.js

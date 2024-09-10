@@ -2,18 +2,25 @@
   "name": "infra",
   "private": true,
   "type": "module",
-  "main": "index.js",
   "dependencies": {
     "@actions/artifact": "2.1.9",
-    "@actions/http-client": "^2.2.3",
-    "@octokit/core": "^6.1.2",
-    "tunnel": "^0.0.6",
-    "undici": "^6.19.8"
+    "@octokit/core": "6.1.2",
+    "@octokit/request": "9.1.3",
+    "@octokit/request-error": "6.1.4",
+    "tunnel": "0.0.6",
+    "undici": "6.19.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.1",
+    "@eslint/js": "^9.10.0",
+    "@octokit/openapi-types": "22.2.0",
+    "@stylistic/eslint-plugin": "^2.8.0",
     "@types/node": "^22.5.4",
-    "eslint": "^9.9.1",
+    "@types/tunnel": "^0.0.7",
+    "eslint": "^9.10.0",
+    "eslint-plugin-n": "^17.10.2",
     "globals": "^15.9.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
