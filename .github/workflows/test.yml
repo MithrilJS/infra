@@ -4,7 +4,8 @@ on:
     - opened
     - synchronize
   push:
-    tags: main
+    branches:
+    - main
 
 jobs:
   test_config:
