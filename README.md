@@ -4,35 +4,29 @@
 
 This handles all deploy processes and centralizes all the permissions.
 
-Admin note: to use this, it's a multi-step process.
+> Admins should use [the runbook](./RUNBOOK.md) to know how to do various things.
+
+## Usage
+
+It's a multi-step process.
 
 1. Determine the repo you want to add it to. Anywhere you see `$REPO` here, substitute that with the name of the repo you chose.
 2. Determine the module name you want to publish or register. Anywhere you see `$MODULE` here, substitute that with the name of the module you chose.
-3. Create a new [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new).
-   - Name: `$REPO`
-   - Expiration: 1 year from now (you'll need to manually enter it).
-   - Description: up to you.
-   - Resource owner: MithrilJS
-   - Repository access:
-     - Click "Only select repositories", open the "Select repositories" dropdown, and search and add `$REPO`.
-     - Set Repository Permissions > Contents to "Read and write"
-     - Set Repository Permissions > Metadata to "Read"
-4. [Go to the MithrilJS org's settings.](https://github.com/organizations/MithrilJS/settings) Scroll down to "Personal Access Tokens" and click it. Then, click "Pending Requests". From here, approve your token so it can be used.
-   - If you're not an admin, you'll need an admin to do this for you.
-5. Add `"$MODULE": "$REPO"` to [`lib/projects.js`](./lib/projects.js) in the relevant command's object.
-6. Add `"$REPO": "$EXPIRY"` to [`lib/expiry.js`](./lib/expiry.js) in `repoExpiryDates`, where `$EXPIRY` is the day before your token expires in ISO format, like `2020-01-02`.
-7. Add the personal access token as the `DEPLOY_TOKEN` secret. If a repo has multiple of these, it's okay to change this name to something more meaningful.
-8. Create a pull request to the source repo where you want to call from, with the following (adjusted as needed):
+3. If your package requires publishing to a new npm module, reach out to an admin to create a new local access token if needed and tell you what to fill. You will need to rebase your pull request for later steps with this repo name, or (better) just allow maintainers to write to your pull request. The admin will also set up a secret for you to send deploy requests with.
+4. Add the personal access token as the `DEPLOY_TOKEN` secret (or whatever the admin told you).
+5. Create a pull request to the source repo where you want to call from, with the following (adjusted as needed):
    - Deploy to npm:
      ```yml
-     - uses: MithrilJS/infra/deploy-npm@main
+     - uses: MithrilJS/infra/deploy@main
        with:
+         type: npm
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```
    - Deploy to GitHub Pages:
      ```yml
-     - uses: MithrilJS/infra/deploy-gh-pages@main
+     - uses: MithrilJS/infra/deploy@main
        with:
+         type: gh-pages
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```
    To deploy a package not located in the repo root, set the `package_dir` option:
