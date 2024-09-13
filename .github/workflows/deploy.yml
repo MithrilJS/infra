@@ -14,6 +14,9 @@ on:
         - npm
         - github-pages
         required: true
+      packageName:
+        type: string
+        required: true
       tarballName:
         type: string
         required: true
@@ -35,4 +38,4 @@ jobs:
     - uses: ./infra/internal/deploy
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
-        github_pages_token: ${{ secrets.GITHUB_PAGES_TOKEN }}
+        gh_pages_token: ${{ secrets.GH_PAGES_TOKEN }}
