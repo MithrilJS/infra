@@ -14,4 +14,6 @@ jobs:
     - windows-latest
     steps:
     - run: git clone --depth=1 "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" .
+    - run: npm ci
+    - run: npx eslint .
     - run: node ./lib/config.js
