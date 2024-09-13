@@ -1,0 +1,15 @@
+name: Request a deployment
+
+inputs:
+  type:
+    description: The type of deployment to perform.
+    required: true
+  root_dir:
+    description: The directory to the root. Defaults to `GITHUB_WORKSPACE`.
+  token:
+    description: The token to kickstart the deployment process.
+    required: true
+
+runs:
+  using: node20
+  main: ../lib/entry/deploy.js

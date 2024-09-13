@@ -25,13 +25,13 @@ Admin note: to use this, it's a multi-step process.
 8. Create a pull request to the source repo where you want to call from, with the following (adjusted as needed):
    - Deploy to npm:
      ```yml
-     - uses: MithrilJS/infra/deploy-npm
+     - uses: MithrilJS/infra/deploy-npm@main
        with:
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```
    - Deploy to GitHub Pages:
      ```yml
-     - uses: MithrilJS/infra/deploy-gh-pages
+     - uses: MithrilJS/infra/deploy-gh-pages@main
        with:
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```

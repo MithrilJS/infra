@@ -12,4 +12,4 @@ jobs:
     - windows-latest
     - macos-latest
     steps:
-    - uses: MithrilJS/infra/internal/remind
+    - uses: MithrilJS/infra/internal/remind@main

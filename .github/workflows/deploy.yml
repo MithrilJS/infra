@@ -7,7 +7,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: MithrilJS/infra/internal/deploy
+    - uses: MithrilJS/infra/internal/deploy@main
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
         github_pages_token: ${{ secrets.GITHUB_PAGES_TOKEN }}
