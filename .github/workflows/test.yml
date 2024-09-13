@@ -1,0 +1,16 @@
+on:
+  pull_request:
+    types:
+    - opened
+    - synchronize
+  push:
+    tags: main
+
+jobs:
+  test_config:
+    runs-on:
+    - ubuntu-latest
+    - windows-latest
+    steps:
+    - run: git clone --depth=1 "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" .
+    - run: node ./lib/config.js
