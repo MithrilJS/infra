@@ -1,6 +1,8 @@
 name: Do internal deployment
 
 inputs:
+  npm_token:
+    required: true
   github_pages_token:
     required: true
 

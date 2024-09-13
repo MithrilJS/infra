@@ -2,12 +2,37 @@ on:
   repository_dispatch:
     types:
     - deploy
+  workflow_dispatch:
+    # Note: changes to this *must* be reflected in `lib/util.js`.
+    inputs:
+      repo:
+        type: string
+        required: true
+      type:
+        type: choice
+        options:
+        - npm
+        - github-pages
+        required: true
+      tarballName:
+        type: string
+        required: true
+      artifactId:
+        type: number
+        required: true
+      workflowRunId:
+        type: number
+        required: true
+      buildVersion:
+        type: number
+        required: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: MithrilJS/infra/internal/deploy@main
+    - run: git clone --depth=1 "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" .
+    - uses: ./infra/internal/deploy
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
         github_pages_token: ${{ secrets.GITHUB_PAGES_TOKEN }}
