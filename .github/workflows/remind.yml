@@ -8,10 +8,7 @@ permissions:
 
 jobs:
   remind:
-    runs-on:
-    - ubuntu-latest
-    - windows-latest
-    - macos-latest
+    runs-on: ubuntu-latest
     steps:
     - run: git clone --depth=1 "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" .
     - uses: ./internal/remind
