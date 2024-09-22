@@ -1,0 +1,21 @@
+name: Reject PR
+
+on:
+  workflow_call:
+    inputs:
+      correct_branch:
+        type: string
+        required: true
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        export GITHUB_TOKEN="$GH_TOKEN_SECRET"
+        gh pr close "$PR_URL" --comment "$MESSAGE" --reason 'not planned' &&
+        gh pr lock "$PR_URL" --reason 'resolved'
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        PR_URL: ${{ github.event.issue.url }}
+        MESSAGE: Hey @${{ github.actor }}, this pull request should be directed towards `${{ inputs.correct_branch }}`. Please file a new pull request targeting that branch instead.

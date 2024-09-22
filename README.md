@@ -1,12 +1,17 @@
 **⚠⚠⚠ Warning: this repo is under construction. ⚠⚠⚠**
 
-# MithrilJS global deploy scripts
+# MithrilJS shared infra workflows and scripts
 
-This handles all deploy processes and centralizes all the permissions.
+This handles all deploy processes and centralizes all the permissions. It also includes some utility scripts
 
-> Admins should use [the runbook](./RUNBOOK.md) to know how to do various things.
+> Admins should consult [the runbook](./RUNBOOK.md) as well.
 
-## Usage
+- [Deploy](#deploy)
+- [Block a PR with a comment](#block-a-pr-with-a-comment)
+- [Notify triage](#notify-triage)
+- [License](#license)
+
+## Deploy
 
 It's a multi-step process.
 
@@ -34,6 +39,58 @@ It's a multi-step process.
    with:
      root_dir: ${{ github.workspace }}/path/to/package
    ```
+
+## Block a PR with a comment
+
+Usage is pretty simple. Suppose development is occurring on `main` and the PR is to the special branch `release`. You can use this workflow to handle it easily.
+
+```yml
+name: Deny pushing to `release`
+on:
+  pull_request:
+    types: [opened]
+    branches: [release]
+permissions:
+  issues: write
+jobs:
+  reject:
+    uses: MithrilJS/infra/.github/workflows/reject-pr.yml@main
+```
+
+If the right branch isn't `main`, you can specify it explicitly. Suppose it's `next` instead. It's still just as easy.
+
+```yml
+name: Deny pushing to `release`
+on:
+  pull_request:
+    types: [opened]
+    branches: [release]
+permissions:
+  issues: write
+jobs:
+  reject:
+    uses: MithrilJS/infra/.github/workflows/reject-pr.yml@main
+    with:
+      correct_branch: next
+```
+
+## Notify triage
+
+Usage is extremely simple. This also implicitly adds the issue to [our tracking project](https://github.com/orgs/MithrilJS/projects/2) for triage.
+
+```yml
+name: Notify triage on issue create
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+permissions:
+  issues: write
+jobs:
+  reject:
+    uses: MithrilJS/infra/.github/workflows/notify-triage.yml@main
+```
 
 ## License
 
