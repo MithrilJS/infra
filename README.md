@@ -32,7 +32,7 @@ It's a multi-step process.
    To deploy a package not located in the repo root, set the `root_dir` option:
    ```yml
    with:
-     root_dir: ${{ env.GITHUB_WORKSPACE }}/path/to/package
+     root_dir: ${{ github.workspace }}/path/to/package
    ```
 
 ## License
