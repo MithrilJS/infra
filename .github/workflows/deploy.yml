@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: git clone --depth=1 "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" .
+    - run: npm ci --production
     - uses: ./infra/internal/deploy
       with:
         npm_token: ${{ secrets.NPM_TOKEN }}
