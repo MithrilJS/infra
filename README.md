@@ -87,6 +87,7 @@ on:
     types: [opened]
 permissions:
   issues: write
+  repository-projects: write
 jobs:
   reject:
     uses: MithrilJS/infra/.github/workflows/notify-triage.yml@main
