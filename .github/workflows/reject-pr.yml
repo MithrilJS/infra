@@ -5,7 +5,7 @@ on:
     inputs:
       correct_branch:
         type: string
-        required: true
+        default: main
 
 jobs:
   post:
