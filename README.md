@@ -29,10 +29,10 @@ It's a multi-step process.
          type: gh-pages
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```
-   To deploy a package not located in the repo root, set the `package_dir` option:
+   To deploy a package not located in the repo root, set the `root_dir` option:
    ```yml
    with:
-     package_dir: ${{ env.GITHUB_WORKSPACE }}/path/to/package
+     root_dir: ${{ env.GITHUB_WORKSPACE }}/path/to/package
    ```
 
 ## License
