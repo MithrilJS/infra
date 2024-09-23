@@ -7,7 +7,7 @@ export default [
     js.configs.recommended,
     n.configs["flat/recommended"],
     {
-        ignores: ["node_modules"],
+        ignores: ["node_modules", "dist"],
         name: "root config",
         plugins: {
             "@stylistic": stylistic,

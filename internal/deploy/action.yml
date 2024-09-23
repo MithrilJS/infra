@@ -8,4 +8,4 @@ inputs:
 
 runs:
   using: node20
-  main: ../../lib/entry/handle-deploy.js
+  main: ../../dist/handle-deploy.js

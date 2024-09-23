@@ -12,4 +12,4 @@ inputs:
 
 runs:
   using: node20
-  main: ../lib/entry/deploy.js
+  main: ../dist/deploy.js
