@@ -44,7 +44,7 @@ export default [
             "@stylistic/function-call-spacing": "error",
             "@stylistic/generator-star-spacing": "error",
             "n/handle-callback-err": "error",
-            "id-match": ["error", "^_?(?:[A-Za-z$][\\w$]*|[$A-Z][$A-Z0-9]*(?:_[$A-Z0-9]+)*)$", {properties: false}],
+            "id-match": ["error", "^_$|^_?(?:[A-Za-z$][\\w$]*|[$A-Z][$A-Z0-9]*(?:_[$A-Z0-9]+)*)$", {properties: false}],
             "@stylistic/indent": ["error", 4, {outerIIFEBody: 0, SwitchCase: 1}],
             "@stylistic/implicit-arrow-linebreak": ["error", "beside"],
             "@stylistic/key-spacing": "error",
