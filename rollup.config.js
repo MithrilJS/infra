@@ -12,7 +12,7 @@ const names = await fs.readdir(path.resolve(root, "lib/entry"))
 export default names.map((name) => ({
     input: path.resolve(root, "lib/entry", name),
     output: {
-        format: "cjs",
+        format: "esm",
         file: path.resolve(root, "dist", name),
         inlineDynamicImports: true,
     },
