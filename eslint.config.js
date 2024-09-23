@@ -16,7 +16,7 @@ export default [
         languageOptions: {
             ecmaVersion: 2022,
             globals: {
-                ...globals.node,
+                ...globals.nodeBuiltin,
                 ...globals.es2022,
             },
         },
