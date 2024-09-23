@@ -1,0 +1,18 @@
+name: Notify on missing dist update
+
+on:
+  pull_request_target:
+    branches: [main]
+    paths: ['lib', '!dist']
+
+jobs:
+  complain:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        export GITHUB_TOKEN="$GH_TOKEN_SECRET"
+        gh pr review "$PR_URL" --request-changes --body "$MESSAGE"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        PR_URL: ${{ github.event.issue.url }}
+        MESSAGE: Don't forget to rebuild `dist/`.

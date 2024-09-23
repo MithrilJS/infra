@@ -15,3 +15,6 @@ jobs:
         export GITHUB_TOKEN="$GH_TOKEN_SECRET"
         gh issue edit "$ISSUE_URL" --add-project 'Triage/bugs' &&
         gh issue comment "$ISSUE_URL" --body '@MithrilJS/triage Please take a look.'
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        ISSUE_URL: ${{ github.event.issue.url }}
