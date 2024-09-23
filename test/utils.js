@@ -4,10 +4,8 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import {fileURLToPath} from "node:url"
 import {inspect} from "node:util"
-import {once} from "node:events"
-import {spawn} from "node:child_process"
 
-import {Fail, captureToString, getTemp} from "../lib/util.js"
+import {Fail, getTemp} from "../lib/util.js"
 
 async function beforeEach() {
     const temp = await getTemp()
@@ -25,39 +23,10 @@ export function assertFail(fn) {
     return assert.rejects(fn, new Fail())
 }
 
-function unorderedEqual(a, b) {
-    return a.length === b.length &&
-        a.every((line) => b.includes(line)) &&
-        b.every((line) => a.includes(line))
-}
-
 let temp
 
 async function tempFile(name) {
     return path.resolve(temp ??= await getTemp(), name)
-}
-
-export async function assertTarballValid(name, expected) {
-    await assertTarballPresent(name)
-
-    const proc = spawn("tar", ["--list", "--file", await tempFile(name)], {
-        timeout: 5000,
-        stdio: ["inherit", "pipe", "pipe"],
-    })
-
-    const [[status, signal], stdout, stderr] = await Promise.all([
-        once(proc, "exit"),
-        captureToString(proc.stdout),
-        captureToString(proc.stderr),
-    ])
-
-    assert.equal(status, 0, `tar --list failed with status ${status}, signal ${signal}:\n${stderr}`)
-
-    const actual = stdout.trim().split(/\s*(?:\n|\r\n?)\s*/g)
-
-    if (!unorderedEqual(actual, expected)) {
-        throw new assert.AssertionError({message: "Tarball doesn't match.", expected, actual})
-    }
 }
 
 async function checkExists(file) {

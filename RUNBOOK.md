@@ -3,7 +3,6 @@
 - [Create a new deployment token](#create-a-new-deployment-token)
 - [Update an existing deployment token](#update-an-existing-deployment-token)
 - [Create a new npm token](#create-a-new-npm-token)
-- [Update the org-level GitHub Pages token](#update-the-org-level-github-pages-token)
 
 ## Create a new deployment token
 
@@ -80,35 +79,3 @@ For now, create a classic token of type "Automation". We can switch to the fine-
 9. Come up with a unique, descriptive name, and use that for the name.
 10. Paste the copied token into the "Secret" field.
 11. Click "Add secret".
-
-## Update the org-level GitHub Pages token
-
-This is for a given repository `$REPO`, like `MithrilJS/mithril.js`.
-
-If the token is yours:
-
-1. [Go to your developer settings](https://github.com/settings/apps), click the "Personal access tokens" navigation dropdown, and click "Fine-grained tokens".
-2. Set the expiration to 1 year from now. This is the longest the selector will let you choose.
-3. Go to the bottom of the page and click "Regenerate token".
-4. Copy the resulting token.
-5. [Go to this repo's Actions secrets page.](https://github.com/MithrilJS/infra/settings/secrets/actions)
-6. In "Repository secrets", find `GH_PAGES_TOKEN` and click its edit icon.
-7. Paste the copied token into the "Secret" field.
-8. Click "Update secret".
-
-If the token is not yours:
-
-1. Create a new [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new).
-2. For the name, use `$REPO deploy pages`. Feel free to shorten the repo name if needed - it's just important that you're able to find it
-3. Set the expiration to 1 year from now. This is the longest the selector will let you choose.
-4. For the description, it's up to you.
-5. Set the resource owner to `@MithrilJS`.
-6. In repository access, click "Only select repositories", open the "Select repositories" dropdown, and search and add the following repositories:
-   - `MithrilJS/mithril.js`
-7. In "Permissions", set Repository Permissions > Deployments to "Read and write"
-8. Go to the bottom of the page and click "Generate token".
-9. Copy the resulting token.
-10. [Go to this repo's Actions secrets page.](https://github.com/MithrilJS/infra/settings/secrets/actions)
-11. In "Repository secrets", find `GH_PAGES_TOKEN` and click its edit icon.
-12. Paste the copied token into the "Secret" field.
-13. Click "Update secret".

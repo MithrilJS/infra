@@ -27,13 +27,6 @@ It's a multi-step process.
          type: npm
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```
-   - Deploy to GitHub Pages:
-     ```yml
-     - uses: MithrilJS/infra/deploy@main
-       with:
-         type: github-pages
-         token: ${{ secrets.DEPLOY_TOKEN }}
-     ```
    To deploy a package not located in the repo root, set the `root_dir` option:
    ```yml
    with:
