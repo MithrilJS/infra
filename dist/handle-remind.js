@@ -66,7 +66,7 @@ const projects = {
         //     tokenExpiryDate: d(1970, 1, 1),
         //     tokenName: "GH_PAGES_TOKEN",
         // },
-        "mithril.github.io/docs": {
+        "mithriljs.github.io/docs": {
             location: "MithrilJS/docs",
             tokenExpiryDate: d(2025, 9, 23),
             tokenName: "GH_PAGES_TOKEN",
