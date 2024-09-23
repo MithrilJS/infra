@@ -1,51 +1,30 @@
-'use strict';
-
-var require$$2$1 = require('node:http');
-var https$1 = require('node:https');
-require('net');
-var require$$1 = require('tls');
-var require$$2 = require('http');
-var require$$3 = require('https');
-var require$$4 = require('events');
-require('assert');
-var require$$6 = require('util');
-var require$$0 = require('node:assert');
-var require$$4$1 = require('node:net');
-var require$$0$1 = require('node:stream');
-var require$$0$2 = require('node:buffer');
-var require$$0$3 = require('node:util');
-var require$$7 = require('node:querystring');
-var require$$8 = require('node:events');
-var require$$0$4 = require('node:diagnostics_channel');
-var require$$4$2 = require('node:tls');
-var require$$1$1 = require('node:zlib');
-var require$$5 = require('node:perf_hooks');
-var require$$8$1 = require('node:util/types');
-var require$$1$2 = require('node:url');
-var require$$5$1 = require('node:async_hooks');
-require('node:console');
-var require$$5$2 = require('string_decoder');
-var require$$3$1 = require('node:worker_threads');
-
-function _interopNamespaceDefault(e) {
-    var n = Object.create(null);
-    if (e) {
-        Object.keys(e).forEach(function (k) {
-            if (k !== 'default') {
-                var d = Object.getOwnPropertyDescriptor(e, k);
-                Object.defineProperty(n, k, d.get ? d : {
-                    enumerable: true,
-                    get: function () { return e[k]; }
-                });
-            }
-        });
-    }
-    n.default = e;
-    return Object.freeze(n);
-}
-
-var require$$2__namespace = /*#__PURE__*/_interopNamespaceDefault(require$$2$1);
-var https__namespace = /*#__PURE__*/_interopNamespaceDefault(https$1);
+import * as require$$2 from 'node:http';
+import require$$2__default from 'node:http';
+import * as https$1 from 'node:https';
+import 'net';
+import require$$1 from 'tls';
+import require$$2$1 from 'http';
+import require$$3 from 'https';
+import require$$4 from 'events';
+import 'assert';
+import require$$6 from 'util';
+import require$$0 from 'node:assert';
+import require$$4$1 from 'node:net';
+import require$$0$1 from 'node:stream';
+import require$$0$2 from 'node:buffer';
+import require$$0$3 from 'node:util';
+import require$$7 from 'node:querystring';
+import require$$8 from 'node:events';
+import require$$0$4 from 'node:diagnostics_channel';
+import require$$4$2 from 'node:tls';
+import require$$1$1 from 'node:zlib';
+import require$$5 from 'node:perf_hooks';
+import require$$8$1 from 'node:util/types';
+import require$$1$2 from 'node:url';
+import require$$5$1 from 'node:async_hooks';
+import 'node:console';
+import require$$5$2 from 'string_decoder';
+import require$$3$1 from 'node:worker_threads';
 
 /** @type {Record<"npm" | "github-pages", Record<string, Project>>} */
 const projects = {
@@ -185,7 +164,7 @@ var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof win
 var tunnel$1 = {};
 
 var tls$1 = require$$1;
-var http$1 = require$$2;
+var http$1 = require$$2$1;
 var https = require$$3;
 var events$1 = require$$4;
 var util$n = require$$6;
@@ -1015,7 +994,7 @@ var tree_1 = {
 
 const assert$d = require$$0;
 const { kDestroyed: kDestroyed$1, kBodyUsed: kBodyUsed$1, kListeners, kBody: kBody$2 } = symbols$4;
-const { IncomingMessage } = require$$2$1;
+const { IncomingMessage } = require$$2__default;
 const stream$1 = require$$0$1;
 const net$2 = require$$4$1;
 const { Blob: Blob$1 } = require$$0$2;
@@ -10122,7 +10101,7 @@ var redirectInterceptor = createRedirectInterceptor$2;
 
 const assert$7 = require$$0;
 const net = require$$4$1;
-const http = require$$2$1;
+const http = require$$2__default;
 const util$f = util$m;
 const { channels } = diagnostics;
 const Request = request$3;
@@ -15405,7 +15384,7 @@ function requireFetch () {
 	const { dataURLProcessor, serializeAMimeType, minimizeSupportedMimeType } = requireDataUrl();
 	const { getGlobalDispatcher } = global$1;
 	const { webidl } = requireWebidl();
-	const { STATUS_CODES } = require$$2$1;
+	const { STATUS_CODES } = require$$2__default;
 	const GET_OR_HEAD = ['GET', 'HEAD'];
 
 	const defaultUserAgent = typeof __UNDICI_IS_NODE__ !== 'undefined' || typeof esbuildDetection !== 'undefined'
@@ -24655,7 +24634,7 @@ const proxyHasGitHubApi = /(?:^|,)\s*(?:\*|(?:(?:(?:(?:api)?\.)?github)?\.)?com(
 // Note: this assumes the public `https://api.github.com` URL is being used for the API.
 
 // This sets up any potential internal proxying Github might use in its runtime.
-const maxSockets = require$$2__namespace.globalAgent.maxSockets;
+const maxSockets = require$$2.globalAgent.maxSockets;
 let proxyUrl2;
 
 const noProxy = process.env.no_proxy || process.env.NO_PROXY;
@@ -24701,7 +24680,7 @@ if (proxyUrl2 && proxyUrl2.hostname) {
     agent = dispatcher = tunnelAgent(agentOptions);
 } else {
     const options = {keepAlive: false, maxSockets};
-    agent = new https__namespace.Agent(options);
+    agent = new https$1.Agent(options);
     if (useProxy) {
         ({
             url: proxyUrl2.href,

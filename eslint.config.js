@@ -4,10 +4,15 @@ import n from "eslint-plugin-n"
 import stylistic from "@stylistic/eslint-plugin"
 
 export default [
+    // I have no clue why on earth it's not spelled out in the docs that `ignores` needs to be in
+    // the first entry of the config, before anything else.
+    // https://github.com/eslint/eslint/discussions/18304#discussioncomment-9069706
+    {
+        ignores: ["dist"],
+    },
     js.configs.recommended,
     n.configs["flat/recommended"],
     {
-        ignores: ["node_modules", "dist"],
         name: "root config",
         plugins: {
             "@stylistic": stylistic,
