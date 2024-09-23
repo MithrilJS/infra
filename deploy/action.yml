@@ -2,7 +2,10 @@ name: Request a deployment
 
 inputs:
   type:
-    description: The type of deployment to perform.
+    description: |
+      The type of deployment to perform. Currently must be one of the following:
+      - `npm`
+      - `github-pages`
     required: true
   root_dir:
     description: The directory to the root. Defaults to `GITHUB_WORKSPACE`.

@@ -31,7 +31,7 @@ It's a multi-step process.
      ```yml
      - uses: MithrilJS/infra/deploy@main
        with:
-         type: gh-pages
+         type: github-pages
          token: ${{ secrets.DEPLOY_TOKEN }}
      ```
    To deploy a package not located in the repo root, set the `root_dir` option:
