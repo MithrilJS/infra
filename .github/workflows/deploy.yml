@@ -34,7 +34,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - run: git clone --depth=1 "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" .
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
     - run: npm ci --production
     - uses: ./infra/internal/deploy
       with:
