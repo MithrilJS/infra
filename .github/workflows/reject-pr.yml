@@ -6,10 +6,9 @@ on:
       correct_branch:
         type: string
         default: main
-
-permissions:
-  id-token: write
-  pull-requests: write
+    secrets:
+      ISSUE_PR_PROJECTS_TOKEN:
+        required: true
 
 jobs:
   post:
@@ -22,9 +21,9 @@ jobs:
           echo "::error::This action must only be run on 'pull_request_target' events"
           exit 1
         esac
-        gh pr close "$PR_URL" --comment "$MESSAGE" --reason 'not planned' &&
-        gh pr lock "$PR_URL" --reason 'resolved'
+        gh pr close --repo "$GITHUB_REPOSITORY" "$PR_NUMBER" --comment "$MESSAGE" --reason 'not planned' &&
+        gh pr lock --repo "$GITHUB_REPOSITORY" "$PR_NUMBER" --reason 'resolved'
       env:
-        GH_TOKEN: ${{ github.token }}
-        PR_URL: ${{ github.event.pull_request.url }}
+        GH_TOKEN: ${{ secrets.ISSUE_PR_PROJECTS_TOKEN }}
+        PR_NUMBER: ${{ github.event.number }}
         MESSAGE: Hey @${{ github.actor }}, this pull request should be directed towards `${{ inputs.correct_branch }}`. Please file a new pull request targeting that branch instead.

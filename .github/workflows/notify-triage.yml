@@ -7,11 +7,8 @@ on:
   pull_request_target:
     types: [opened]
 
-permissions:
-  id-token: write
-  issues: write
-  pull-requests: write
-  repository-projects: write
+# Perms come from the token.
+permissions: {}
 
 jobs:
   notify:
@@ -21,7 +18,7 @@ jobs:
     steps:
     - name: Run workflow
       env:
-        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ secrets.ISSUE_PR_PROJECTS_TOKEN }}
         ISSUE_PR_NUMBER: ${{ github.event.number || github.event.issue.number }}
       run: |
         set -euo pipefail
@@ -39,5 +36,10 @@ jobs:
 
         echo "cmd: $cmd"
 
+        export GH_TOKEN="$PROJECTS_TOKEN"
         gh $cmd edit --repo "$GITHUB_REPOSITORY" "$ISSUE_PR_NUMBER" --add-project 'Triage/bugs'
+        echo "$cmd updated"
+
+        export GH_TOKEN="$COMMENT_TOKEN"
         gh $cmd comment --repo "$GITHUB_REPOSITORY" "$ISSUE_PR_NUMBER" --body '@MithrilJS/triage Please take a look.'
+        echo "$cmd comment posted"

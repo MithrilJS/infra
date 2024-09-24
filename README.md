@@ -43,12 +43,10 @@ on:
   pull_request:
     types: [opened]
     branches: [release]
-permissions:
-  id-token: write
-  pull-requests: write
 jobs:
   reject:
     uses: MithrilJS/infra/.github/workflows/reject-pr.yml@main
+    secrets: inherit
 ```
 
 If the right branch isn't `main`, you can specify it explicitly. Suppose it's `next` instead. It's still just as easy.
@@ -59,12 +57,10 @@ on:
   pull_request:
     types: [opened]
     branches: [release]
-permissions:
-  id-token: write
-  pull-requests: write
 jobs:
   reject:
     uses: MithrilJS/infra/.github/workflows/reject-pr.yml@main
+    secrets: inherit
     with:
       correct_branch: next
 ```
@@ -80,14 +76,10 @@ on:
     types: [opened]
   pull_request:
     types: [opened]
-permissions:
-  id-token: write
-  issues: write
-  pull-requests: write
-  repository-projects: write
 jobs:
   reject:
     uses: MithrilJS/infra/.github/workflows/notify-triage.yml@main
+    secrets: inherit
 ```
 
 ## License
