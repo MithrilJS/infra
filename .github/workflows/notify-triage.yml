@@ -7,6 +7,10 @@ on:
   pull_request_target:
     types: [opened]
 
+permissions:
+  issues: write
+  repository-projects: write
+
 jobs:
   notify:
     runs-on: ubuntu-latest
