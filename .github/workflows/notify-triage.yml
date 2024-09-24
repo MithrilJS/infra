@@ -13,13 +13,13 @@ permissions:
 
 jobs:
   notify:
+    # Exclude dependabot's dependency updates. That's just going to annoy people.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
     - name: Run workflow
-      # Exclude dependabot's dependency updates. That's just going to annoy people.
-      if: ${{ github.actor != 'dependabot[bot]' }}
       env:
-        GH_TOKEN_SECRET: ${{ github.token }}
+        GH_TOKEN: ${{ github.token }}
       run: |
         set -euo pipefail
 
@@ -39,6 +39,5 @@ jobs:
         echo "cmd: $cmd"
         echo "id: $id"
 
-        export GITHUB_TOKEN="$GH_TOKEN_SECRET"
         gh $cmd edit --repo "$GITHUB_REPOSITORY" "$id" --add-project 'Triage/bugs'
         gh $cmd comment --repo "$GITHUB_REPOSITORY" "$id" --body '@MithrilJS/triage Please take a look.'
