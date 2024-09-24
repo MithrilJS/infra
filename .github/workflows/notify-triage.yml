@@ -22,23 +22,19 @@ jobs:
         echo "event name: $GITHUB_EVENT_NAME"
 
         case "$GITHUB_EVENT_NAME" in
-          "issue")
-            cmd=issue
-            url="$(jq -r .issue.issue_url <"$GITHUB_EVENT_PATH")"
-            ;;
-          "pull_request_target")
-            cmd=pr
-            url="$(jq -r .pull_request.issue_url <"$GITHUB_EVENT_PATH")"
-            ;;
+          "issue") cmd=issue ;;
+          "pull_request_target") cmd=pr ;;
           *)
             echo "::error::This action must only be run on 'issue' and 'pull_request_target' events"
             exit 1
             ;;
         esac
 
+        id="$(jq -r .number <"$GITHUB_EVENT_PATH")"
+
         echo "cmd: $cmd"
-        echo "url: $url"
+        echo "id: $id"
 
         export GITHUB_TOKEN="$GH_TOKEN_SECRET"
-        gh $cmd edit "$url" --add-project 'Triage/bugs' &&
-        gh $cmd comment "$url" --body '@MithrilJS/triage Please take a look.'
+        gh $cmd edit --repo "$GITHUB_REPOSITORY" "$id" --add-project 'Triage/bugs'
+        gh $cmd comment --repo "$GITHUB_REPOSITORY" "$id" --body '@MithrilJS/triage Please take a look.'
