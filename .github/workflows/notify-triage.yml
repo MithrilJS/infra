@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run workflow
+      # Exclude dependabot's dependency updates. That's just going to annoy people.
+      if: ${{ github.actor != 'dependabot[bot]' }}
       env:
         GH_TOKEN_SECRET: ${{ github.token }}
       run: |
