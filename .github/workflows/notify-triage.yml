@@ -3,16 +3,21 @@ name: Notify triage
 on:
   workflow_call:
 
-env:
-  ISSUE_URL: ${{ github.event.issue.url || github.event.pull_request.url }}
-  GH_TOKEN_SECRET: ${{ github.token }}
-
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+    - name: Reject invalid event type
+      if: ${{ github.event_name != "issue" && github.event_name != "pull_request_target" }}
+      run: |
+        echo "::error::This action must only be run on 'issue' and 'pull_request_target' events"
+        exit 1
     - name: Notify triage
+      if: ${{ github.event_name == "issue" || github.event_name == "pull_request_target" }}
       run: |
         export GITHUB_TOKEN="$GH_TOKEN_SECRET"
         gh issue edit "$ISSUE_URL" --add-project 'Triage/bugs' &&
         gh issue comment "$ISSUE_URL" --body '@MithrilJS/triage Please take a look.'
+      env:
+        ISSUE_URL: ${{ github.event.issue.url || github.event.pull_request.url }}
+        GH_TOKEN_SECRET: ${{ github.token }}
