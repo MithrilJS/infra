@@ -44,7 +44,8 @@ on:
     types: [opened]
     branches: [release]
 permissions:
-  issues: write
+  id-token: write
+  pull-requests: write
 jobs:
   reject:
     uses: MithrilJS/infra/.github/workflows/reject-pr.yml@main
@@ -59,7 +60,8 @@ on:
     types: [opened]
     branches: [release]
 permissions:
-  issues: write
+  id-token: write
+  pull-requests: write
 jobs:
   reject:
     uses: MithrilJS/infra/.github/workflows/reject-pr.yml@main
@@ -79,7 +81,9 @@ on:
   pull_request:
     types: [opened]
 permissions:
+  id-token: write
   issues: write
+  pull-requests: write
   repository-projects: write
 jobs:
   reject:

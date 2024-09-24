@@ -22,7 +22,7 @@ jobs:
     - name: Run workflow
       env:
         GH_TOKEN: ${{ github.token }}
-        ISSUE_PR_NUMBER: ${{ github.event.number }}
+        ISSUE_PR_NUMBER: ${{ github.event.number || github.event.issue.number }}
       run: |
         set -euo pipefail
 
