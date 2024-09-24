@@ -1,20 +1,18 @@
-name: Ping triage
+name: Notify triage
 
 on:
   workflow_call:
 
 env:
-  ISSUE_URL: ${{ github.event.issue.url }}
+  ISSUE_URL: ${{ github.event.issue.url || github.event.pull_request.url }}
   GH_TOKEN_SECRET: ${{ github.token }}
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-    - run: |
+    - name: Notify triage
+      run: |
         export GITHUB_TOKEN="$GH_TOKEN_SECRET"
         gh issue edit "$ISSUE_URL" --add-project 'Triage/bugs' &&
         gh issue comment "$ISSUE_URL" --body '@MithrilJS/triage Please take a look.'
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-        ISSUE_URL: ${{ github.event.issue.url }}
