@@ -12,10 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
+        set -euo pipefail
+        echo "event name: $GITHUB_EVENT_NAME"
+        if [[ "$GITHUB_EVENT_NAME" != "pull_request_target" ]]; then
+          echo "::error::This action must only be run on 'pull_request_target' events"
+          exit 1
+        esac
         export GITHUB_TOKEN="$GH_TOKEN_SECRET"
         gh pr close "$PR_URL" --comment "$MESSAGE" --reason 'not planned' &&
         gh pr lock "$PR_URL" --reason 'resolved'
       env:
         GITHUB_TOKEN: ${{ github.token }}
-        PR_URL: ${{ github.event.issue.url }}
+        PR_URL: ${{ github.event.pull_request.url }}
         MESSAGE: Hey @${{ github.actor }}, this pull request should be directed towards `${{ inputs.correct_branch }}`. Please file a new pull request targeting that branch instead.
