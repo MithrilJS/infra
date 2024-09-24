@@ -28,7 +28,7 @@ jobs:
         echo "event name: $GITHUB_EVENT_NAME"
 
         case "$GITHUB_EVENT_NAME" in
-          "issues") cmd=issues ;;
+          "issues") cmd=issue ;;
           "pull_request_target") cmd=pr ;;
           *)
             echo "::error::This action must only be run on 'issue' and 'pull_request_target' events"
