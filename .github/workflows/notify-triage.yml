@@ -22,6 +22,7 @@ jobs:
     - name: Run workflow
       env:
         GH_TOKEN: ${{ github.token }}
+        ISSUE_PR_NUMBER: ${{ github.event.number }}
       run: |
         set -euo pipefail
 
@@ -36,10 +37,7 @@ jobs:
             ;;
         esac
 
-        id="$(jq -r .number <"$GITHUB_EVENT_PATH")"
-
         echo "cmd: $cmd"
-        echo "id: $id"
 
-        gh $cmd edit --repo "$GITHUB_REPOSITORY" "$id" --add-project 'Triage/bugs'
-        gh $cmd comment --repo "$GITHUB_REPOSITORY" "$id" --body '@MithrilJS/triage Please take a look.'
+        gh $cmd edit --repo "$GITHUB_REPOSITORY" "$ISSUE_PR_NUMBER" --add-project 'Triage/bugs'
+        gh $cmd comment --repo "$GITHUB_REPOSITORY" "$ISSUE_PR_NUMBER" --body '@MithrilJS/triage Please take a look.'
