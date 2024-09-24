@@ -10,6 +10,7 @@ on:
 permissions:
   id-token: write
   issues: write
+  pull-requests: write
   repository-projects: write
 
 jobs:
@@ -27,7 +28,7 @@ jobs:
         echo "event name: $GITHUB_EVENT_NAME"
 
         case "$GITHUB_EVENT_NAME" in
-          "issue") cmd=issue ;;
+          "issues") cmd=issues ;;
           "pull_request_target") cmd=pr ;;
           *)
             echo "::error::This action must only be run on 'issue' and 'pull_request_target' events"
