@@ -30,9 +30,9 @@ jobs:
             exit 1
             ;;
         esac
-    - name: Add project
-      run: gh ${{ steps.validated.outputs.cmd }} edit --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --add-project 'Triage/bugs'
     - name: Post comment
       # Don't ping over dependabot's dependency updates. That's just going to annoy people.
       if: ${{ github.actor != 'dependabot[bot]' }}
       run: gh ${{ steps.validated.outputs.cmd }} comment --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --body '@MithrilJS/triage Please take a look.'
+    - name: Add project
+      run: gh ${{ steps.validated.outputs.cmd }} edit --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --add-project 'Triage/bugs'
