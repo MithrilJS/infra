@@ -42,7 +42,7 @@ jobs:
           "/repos/{owner}/{repo}/collaborators/$GITHUB_ACTOR/permission" |
           jq -r .role_name
         )"
-        if [[ $access =~ ^(admin|maintain|write|triage)$ ]]; then
+        if ! [[ $access =~ ^(admin|maintain|write|triage)$ ]]; then
           gh ${{ steps.validated.outputs.cmd }} comment "$ITEM_NUMBER" --body '@MithrilJS/triage Please take a look.'
         fi
     - name: Add project
