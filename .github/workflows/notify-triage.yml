@@ -7,37 +7,32 @@ on:
   pull_request_target:
     types: [opened]
 
-# Perms come from the token.
+# Permissions come from the token.
 permissions: {}
+
+env:
+  GH_TOKEN: ${{ secrets.ISSUE_PR_PROJECTS_TOKEN }}
 
 jobs:
   notify:
-    # Exclude dependabot's dependency updates. That's just going to annoy people.
-    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
-    - name: Run workflow
-      env:
-        GH_TOKEN: ${{ secrets.ISSUE_PR_PROJECTS_TOKEN }}
-        ISSUE_PR_NUMBER: ${{ github.event.number || github.event.issue.number }}
+    - name: Validate event type
+      id: validated
       run: |
         set -euo pipefail
-
         echo "event name: $GITHUB_EVENT_NAME"
-
         case "$GITHUB_EVENT_NAME" in
-          "issues") cmd=issue ;;
-          "pull_request_target") cmd=pr ;;
+          "issues") echo 'cmd=issue' >> "$GITHUB_OUTPUT" ;;
+          "pull_request_target") echo 'cmd=pr' >> "$GITHUB_OUTPUT" ;;
           *)
             echo "::error::This action must only be run on 'issue' and 'pull_request_target' events"
             exit 1
             ;;
         esac
-
-        echo "cmd: $cmd"
-
-        gh $cmd edit --repo "$GITHUB_REPOSITORY" "$ISSUE_PR_NUMBER" --add-project 'Triage/bugs'
-        echo "$cmd updated"
-
-        gh $cmd comment --repo "$GITHUB_REPOSITORY" "$ISSUE_PR_NUMBER" --body '@MithrilJS/triage Please take a look.'
-        echo "$cmd comment posted"
+    - name: Add project
+      run: gh ${{ steps.validated.outputs.cmd }} edit --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --add-project 'Triage/bugs'
+    - name: Post comment
+      # Don't ping over dependabot's dependency updates. That's just going to annoy people.
+      if: ${{ github.actor != 'dependabot[bot]' }}
+      run: gh ${{ steps.validated.outputs.cmd }} comment --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --body '@MithrilJS/triage Please take a look.'
