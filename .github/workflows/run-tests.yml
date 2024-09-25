@@ -13,6 +13,9 @@ on:
       test-deno:
         type: boolean
         default: false
+      skip-test-task:
+        type: boolean
+        default: false
 
 jobs:
   lint-build:
@@ -27,13 +30,13 @@ jobs:
     - run: npm run build
 
   test-node:
-    if: ${{ inputs.test-node }}
+    if: ${{ inputs.test-node && !inputs.skip-test-task }}
     needs: lint-build
     strategy:
       matrix:
         # See release schedule at https://nodejs.org/en/about/releases/
         # Only LTS releases will be tested on.
-        version: ${{ fromJson(inputs.all-versions && '[18,20,22,"current"]' || '[20]') }}
+        version: ${{ fromJson((inputs.all-versions) && '[18,20,22,"current"]' || '[20]') }}
         image: ${{ fromJson((inputs.all-platforms) && '["ubuntu-latest","windows-latest","macos-latest"]' || '["ubuntu-latest"]') }}
     runs-on: ${{ matrix.image }}
     continue-on-error: ${{ matrix.version == 'current' }}
@@ -47,13 +50,13 @@ jobs:
 
   test-deno:
     needs: lint-build
-    if: ${{ inputs.test-deno }}
+    if: ${{ inputs.test-deno && !inputs.skip-test-task }}
     strategy:
       matrix:
         # See release schedule at https://docs.deno.com/runtime/fundamentals/stability_and_releases/
         # Only LTS releases will be tested on.
-        version: ${{ fromJson(inputs.all-versions && '["v1.x.x","vx.x.x"]' || '["v1.x.x"]') }}
-        image: ${{ fromJson(inputs.all-platforms && '["ubuntu-latest","windows-latest","macos-latest"]' || '["ubuntu-latest"]') }}
+        version: ${{ fromJson((inputs.all-versions) && '["v1.x.x","vx.x.x"]' || '["v1.x.x"]') }}
+        image: ${{ fromJson((inputs.all-platforms) && '["ubuntu-latest","windows-latest","macos-latest"]' || '["ubuntu-latest"]') }}
     runs-on: ${{ matrix.image }}
     continue-on-error: ${{ matrix.version == 'vx.x.x' }}
     steps:
