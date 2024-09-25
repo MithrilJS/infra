@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint . --cache",
     "test": "node ./test/index.js"
   },
   "dependencies": {

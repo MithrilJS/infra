@@ -7,6 +7,7 @@ This handles all deploy processes and centralizes all the permissions. It also i
 > Admins should consult [the runbook](./RUNBOOK.md) as well.
 
 - [Deploy](#deploy)
+- [Define tests](#define-tests)
 - [Block a PR with a comment](#block-a-pr-with-a-comment)
 - [Notify triage](#notify-triage)
 - [License](#license)
@@ -32,6 +33,102 @@ It's a multi-step process.
    with:
      root_dir: ${{ github.workspace }}/path/to/package
    ```
+
+## Define tests
+
+Tests are extremely easy to set up. First, ensure you have `build`, `lint`, and `test` scripts in your `package.json`. Then, you can just do this, which runs `npm run lint`, `npm run build`, and `npm test`.
+
+```yml
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  test:
+    uses: MithrilJS/infra/.github/workflows/run-tests.yml
+```
+
+If you want to test on Deno, you can add `test-deno: true`. You should also add a `deno.json` to your project with a `test` task. Note that building and linting will still use Node.
+
+```yml
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  test:
+    uses: MithrilJS/infra/.github/workflows/run-tests.yml
+    with:
+      test-deno: true
+```
+
+If you want to skip tests on Node, you can add `test-node: false`. This is useful in a strictly non-Node project.
+
+```yml
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  test:
+    uses: MithrilJS/infra/.github/workflows/run-tests.yml
+    with:
+      test-node: false
+      test-deno: true
+```
+
+If you want to run across all OS platforms, you can add `all-platforms: true`.
+
+```yml
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  test:
+    uses: MithrilJS/infra/.github/workflows/run-tests.yml
+    with:
+      all-platforms: true
+```
+
+If you want to run across all runtime versions, you can add `all-versions: true`. This can be combined with `all-platforms: true`.
+
+```yml
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  test:
+    uses: MithrilJS/infra/.github/workflows/run-tests.yml
+    with:
+      all-versions: true
+```
 
 ## Block a PR with a comment
 

@@ -1,0 +1,63 @@
+name: Run tests
+
+on:
+  workflow_call:
+    inputs:
+      all-platforms:
+        type: boolean
+      all-versions:
+        type: boolean
+      test-node:
+        type: boolean
+        default: true
+      test-deno:
+        type: boolean
+        default: false
+
+jobs:
+  lint-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run build
+
+  test-node:
+    if: ${{ inputs.test-node }}
+    needs: lint-build
+    strategy:
+      matrix:
+        # See release schedule at https://nodejs.org/en/about/releases/
+        # Only LTS releases will be tested on.
+        version: ${{ fromJson(inputs.all-versions && '[18,20,22,"current"]' || '[20]') }}
+        image: ${{ fromJson((inputs.all-platforms) && '["ubuntu-latest","windows-latest","macos-latest"]' || '["ubuntu-latest"]') }}
+    runs-on: ${{ matrix.image }}
+    continue-on-error: ${{ matrix.version == 'current' }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.version }}
+    - run: npm ci-test
+
+  test-deno:
+    needs: lint-build
+    if: ${{ inputs.test-deno }}
+    strategy:
+      matrix:
+        # See release schedule at https://docs.deno.com/runtime/fundamentals/stability_and_releases/
+        # Only LTS releases will be tested on.
+        version: ${{ fromJson(inputs.all-versions && '["v1.x.x","vx.x.x"]' || '["v1.x.x"]') }}
+        image: ${{ fromJson(inputs.all-platforms && '["ubuntu-latest","windows-latest","macos-latest"]' || '["ubuntu-latest"]') }}
+    runs-on: ${{ matrix.image }}
+    continue-on-error: ${{ matrix.version == 'vx.x.x' }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: denoland/setup-deno@v1
+      with:
+        deno-version: ${{ matrix.version }}
+    - run: deno task test
