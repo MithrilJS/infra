@@ -42,7 +42,8 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.version }}
-    - run: npm ci-test
+    - run: npm ci
+    - run: npm test
 
   test-deno:
     needs: lint-build
