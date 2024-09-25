@@ -36,7 +36,7 @@ It's a multi-step process.
 
 ## Define tests
 
-Tests are extremely easy to set up. First, ensure you have `build`, `lint`, and `test` scripts in your `package.json`. Then, you can just do this, which runs `npm run lint`, `npm run build`, and `npm test`.
+Tests are extremely easy to set up. First, ensure you have `build`, `lint`, and `test` scripts in your `package.json`. Then, you can just do this, which runs `npm run lint` and `npm run build`.
 
 ```yml
 on:
@@ -51,6 +51,25 @@ permissions:
 jobs:
   test:
     uses: MithrilJS/infra/.github/workflows/run-tests.yml
+```
+
+If you want to run tests on Node, you can add `test-node: true`. This is useful in a strictly non-Node project.
+
+```yml
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  actions: write
+  contents: read
+jobs:
+  test:
+    uses: MithrilJS/infra/.github/workflows/run-tests.yml
+    with:
+      test-node: true
 ```
 
 If you want to test on Deno, you can add `test-deno: true`. You should also add a `deno.json` to your project with a `test` task. Note that building and linting will still use Node.
@@ -72,7 +91,7 @@ jobs:
       test-deno: true
 ```
 
-If you want to skip tests on Node, you can add `test-node: false`. This is useful in a strictly non-Node project.
+You can run tests on both Node and Deno by just specifying both `test-node: true` and `test-deno: true`.
 
 ```yml
 on:
@@ -88,7 +107,7 @@ jobs:
   test:
     uses: MithrilJS/infra/.github/workflows/run-tests.yml
     with:
-      test-node: false
+      test-node: true
       test-deno: true
 ```
 
