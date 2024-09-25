@@ -12,6 +12,8 @@ permissions: {}
 
 env:
   GH_TOKEN: ${{ secrets.ISSUE_PR_PROJECTS_TOKEN }}
+  GH_REPO: ${{ github.repository }}
+  ITEM_NUMBER: ${{ github.event.number || github.event.issue.number }}
 
 jobs:
   notify:
@@ -33,6 +35,15 @@ jobs:
     - name: Post comment
       # Don't ping over dependabot's dependency updates. That's just going to annoy people.
       if: ${{ github.actor != 'dependabot[bot]' }}
-      run: gh ${{ steps.validated.outputs.cmd }} comment --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --body '@MithrilJS/triage Please take a look.'
+      run: |
+        access="$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          "/repos/{owner}/{repo}/collaborators/$GITHUB_ACTOR/permission" |
+          jq -r .role_name
+        )"
+        if [[ $access =~ ^(admin|maintain|write|triage)$ ]]; then
+          gh ${{ steps.validated.outputs.cmd }} comment "$ITEM_NUMBER" --body '@MithrilJS/triage Please take a look.'
+        fi
     - name: Add project
-      run: gh ${{ steps.validated.outputs.cmd }} edit --repo "${{ github.repository }}" "${{ github.event.number || github.event.issue.number }}" --add-project 'Triage/bugs'
+      run: gh ${{ steps.validated.outputs.cmd }} edit "$ITEM_NUMBER" --add-project 'Triage/bugs'
