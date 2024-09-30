@@ -20,7 +20,7 @@
     "@octokit/openapi-types": "22.2.0",
     "@rollup/plugin-commonjs": "26.0.1",
     "@rollup/plugin-json": "6.1.0",
-    "@rollup/plugin-node-resolve": "15.2.4",
+    "@rollup/plugin-node-resolve": "15.3.0",
     "@stylistic/eslint-plugin": "^2.8.0",
     "@types/node": "^22.5.5",
     "@types/tunnel": "^0.0.7",
