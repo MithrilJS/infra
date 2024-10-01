@@ -8,4 +8,22 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: weekly
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ['*']
+      normal:
+        applies-to: version-updates
+        patterns: ['*']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ['*']
+      normal:
+        applies-to: version-updates
+        patterns: ['*']
