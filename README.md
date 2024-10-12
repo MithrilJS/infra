@@ -1,5 +1,3 @@
-**⚠⚠⚠ Warning: this repo is under construction. ⚠⚠⚠**
-
 # MithrilJS shared infra workflows and scripts
 
 This handles all deploy processes and centralizes all the permissions. It also includes some utility scripts
