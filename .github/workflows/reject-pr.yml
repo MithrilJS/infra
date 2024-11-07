@@ -20,7 +20,7 @@ jobs:
         if [[ "$GITHUB_EVENT_NAME" != "pull_request_target" ]]; then
           echo "::error::This action must only be run on 'pull_request_target' events"
           exit 1
-        esac
+        fi
         gh pr close --repo "$GITHUB_REPOSITORY" "$PR_NUMBER" --comment "$MESSAGE" --reason 'not planned' &&
         gh pr lock --repo "$GITHUB_REPOSITORY" "$PR_NUMBER" --reason 'resolved'
       env:
