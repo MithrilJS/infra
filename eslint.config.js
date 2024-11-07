@@ -16,7 +16,6 @@ export default [
         name: "root config",
         plugins: {
             "@stylistic": stylistic,
-            "n": n,
         },
         languageOptions: {
             ecmaVersion: 2022,
