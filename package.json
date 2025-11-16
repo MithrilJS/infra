@@ -8,12 +8,12 @@
     "test": "node ./test/index.js"
   },
   "dependencies": {
-    "@actions/artifact": "2.3.2",
+    "@actions/artifact": "4.0.0",
     "@octokit/core": "7.0.2",
-    "@octokit/request": "10.0.3",
-    "@octokit/request-error": "7.0.0",
+    "@octokit/request": "10.0.4",
+    "@octokit/request-error": "7.0.1",
     "tunnel": "0.0.6",
-    "undici": "7.14.0"
+    "undici": "7.15.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
