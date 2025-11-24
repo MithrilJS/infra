@@ -18,8 +18,8 @@ jobs:
   lint-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
-    - uses: actions/setup-node@v5
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
       with:
         node-version: 20
     - run: npm ci
@@ -38,8 +38,8 @@ jobs:
     runs-on: ${{ matrix.image }}
     continue-on-error: ${{ matrix.version == 'current' }}
     steps:
-    - uses: actions/checkout@v5
-    - uses: actions/setup-node@v5
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.version }}
     - run: npm ci
@@ -57,7 +57,7 @@ jobs:
     runs-on: ${{ matrix.image }}
     continue-on-error: ${{ matrix.version == 'vx.x.x' }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - uses: denoland/setup-deno@v2
       with:
         deno-version: ${{ matrix.version }}
